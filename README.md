@@ -1,2 +1,2 @@
-# Proyecto_programacion_angular
-Curso de coursera para certificado
+# Proyecto de Programación en Angular
+Proyecto de práctica en Angular con TypeScript
