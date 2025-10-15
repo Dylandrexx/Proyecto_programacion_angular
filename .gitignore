@@ -1,0 +1,18 @@
+# App Angular
+app/node_modules/
+app/.angular/
+app/dist/
+app/tmp/
+
+# IDE
+app/.vscode/*
+!app/.vscode/extensions.json
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# SO
+.DS_Store
+Thumbs.db
