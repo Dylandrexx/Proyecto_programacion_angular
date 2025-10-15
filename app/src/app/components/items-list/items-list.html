@@ -1,0 +1,29 @@
+<div class="card shadow-sm">
+  <div class="card-body">
+    <div class="row g-2 align-items-center mb-3">
+      <div class="col-12 col-md-4">
+        <label class="form-label fw-semibold">Nombre</label>
+        <input #name class="form-control" placeholder="Ej: Producto">
+      </div>
+      <div class="col-12 col-md-5">
+        <label class="form-label fw-semibold">Descripción</label>
+        <input #desc class="form-control" placeholder="Ej: Detalle">
+      </div>
+      <div class="col-12 col-md-3 d-grid">
+        <label class="form-label opacity-0">.</label>
+        <button class="btn btn-success" (click)="add(name, desc)">Agregar</button>
+      </div>
+    </div>
+
+    <ul class="list-group">
+      <li class="list-group-item d-flex justify-content-between align-items-start"
+          *ngFor="let it of items; index as i">
+        <div>
+          <div class="fw-semibold">{{ it.name }}</div>
+          <div class="text-muted small">{{ it.desc }}</div>
+        </div>
+        <span class="badge text-bg-primary rounded-pill">#{{ i + 1 }}</span>
+      </li>
+    </ul>
+  </div>
+</div>
