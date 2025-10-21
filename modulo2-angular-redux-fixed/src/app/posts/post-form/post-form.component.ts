@@ -1,18 +1,14 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { invalidParamValidator } from './validators';
 
 @Component({
   selector: 'app-post-form',
   templateUrl: './post-form.component.html',
-  styleUrls: ['./post-form.css'],
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule]
+  styleUrls: ['./post-form.css']
 })
 export class PostFormComponent {
-  @Output() create = new EventEmitter<any>();
+  @Output() create = new EventEmitter<{ title: string; detail: string }>();
 
   fg!: FormGroup;
 

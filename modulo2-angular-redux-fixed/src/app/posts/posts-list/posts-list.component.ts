@@ -1,17 +1,13 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Post } from '../../store/posts.models';
 import { addPost, removePost, upvote, downvote } from '../../store/posts.actions';
 import { selectSortedByVotes } from '../../store/posts.selectors';
-import { PostFormComponent } from '../post-form/post-form.component';
 
 @Component({
   selector: 'app-posts-list',
-  templateUrl: './posts-list.component.html',
-  standalone: true,
-  imports: [CommonModule, PostFormComponent]
+  templateUrl: './posts-list.component.html'
 })
 export class PostsListComponent {
   posts$!: Observable<readonly Post[]>;
@@ -20,7 +16,7 @@ export class PostsListComponent {
     this.posts$ = this.store.select(selectSortedByVotes);
   }
 
-  onCreate(post: any)        { this.store.dispatch(addPost({ post: { ...post, id: Date.now().toString(), votes: 0 } })); }
+  onCreate(post: Post)        { this.store.dispatch(addPost({ post })); }
   onUp(id: string)            { this.store.dispatch(upvote({ id })); }
   onDown(id: string)          { this.store.dispatch(downvote({ id })); }
   onRemove(id: string)        { this.store.dispatch(removePost({ id })); }
