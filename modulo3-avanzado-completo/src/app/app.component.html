@@ -1,0 +1,38 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/">
+      🚀 {{ config.appName }} <small class="text-muted">v{{ config.version }}</small>
+    </a>
+    
+    <div class="navbar-nav ms-auto">
+      <div class="nav-item dropdown" *ngIf="authService.isAuthenticated$ | async">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+          👤 {{ (authService.currentUser$ | async)?.username }}
+        </a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" routerLink="/admin">🛠 Admin</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item text-danger" (click)="logout()">🚪 Cerrar Sesión</a></li>
+        </ul>
+      </div>
+      
+      <a *ngIf="!(authService.isAuthenticated$ | async)" 
+         class="nav-link" 
+         routerLink="/login">
+        🔐 Login
+      </a>
+    </div>
+  </div>
+</nav>
+
+<main class="container-fluid px-0">
+  <router-outlet></router-outlet>
+</main>
+
+<footer class="bg-dark text-light py-3 mt-5">
+  <div class="container text-center">
+    <small>
+      {{ config.appName }} - Angular Advanced with Guards, NgRx, Dexie & Express API
+    </small>
+  </div>
+</footer>

@@ -1,0 +1,71 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">🔐 Iniciar Sesión</h4>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label for="username" class="form-label">Usuario</label>
+              <input
+                type="text"
+                id="username"
+                formControlName="username"
+                class="form-control"
+                placeholder="admin o user"
+                [class.is-invalid]="loginForm.get('username')?.invalid && loginForm.get('username')?.touched"
+              >
+              <div *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched" 
+                   class="invalid-feedback">
+                Usuario es requerido
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="password" class="form-label">Contraseña</label>
+              <input
+                type="password"
+                id="password"
+                formControlName="password"
+                class="form-control"
+                placeholder="admin123 o user123"
+                [class.is-invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+              >
+              <div *ngIf="loginForm.get('password')?.errors?.['required'] && loginForm.get('password')?.touched" 
+                   class="invalid-feedback">
+                Contraseña es requerida
+              </div>
+              <div *ngIf="loginForm.get('password')?.errors?.['minlength'] && loginForm.get('password')?.touched" 
+                   class="invalid-feedback">
+                Mínimo 3 caracteres
+              </div>
+            </div>
+
+            <div *ngIf="error" class="alert alert-danger">
+              {{ error }}
+            </div>
+
+            <button 
+              type="submit" 
+              class="btn btn-primary w-100"
+              [disabled]="loginForm.invalid || loading"
+            >
+              <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+              {{ loading ? 'Iniciando sesión...' : 'Iniciar Sesión' }}
+            </button>
+          </form>
+
+          <div class="mt-4">
+            <h6>Credenciales de prueba:</h6>
+            <ul class="list-unstyled small">
+              <li>👤 <strong>Admin:</strong> admin / admin123</li>
+              <li>👤 <strong>User:</strong> user / user123</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
