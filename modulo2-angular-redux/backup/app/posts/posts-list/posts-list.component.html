@@ -1,0 +1,26 @@
+<!-- Formulario hijo: emite (create) via @Output -->
+<app-post-form (create)="onCreate($event)"></app-post-form>
+<hr>
+
+<!-- Listado reactivo -->
+<ul class="list-group" *ngIf="posts$ | async as posts; else empty">
+  <li class="list-group-item d-flex justify-content-between align-items-start"
+      *ngFor="let p of posts; trackBy: trackById">
+    <div class="me-auto">
+      <div class="fw-bold">{{ p.title }}</div>
+      <small class="text-muted">{{ p.detail }}</small>
+    </div>
+
+    <div class="btn-group ms-3">
+      <button class="btn btn-sm btn-outline-success" (click)="onUp(p.id)">+1</button>
+      <button class="btn btn-sm btn-outline-danger" (click)="onDown(p.id)">-1</button>
+      <button class="btn btn-sm btn-outline-secondary" (click)="onRemove(p.id)">🗑</button>
+    </div>
+
+    <span class="badge bg-primary rounded-pill ms-2">{{ p.votes }}</span>
+  </li>
+</ul>
+
+<ng-template #empty>
+  <p class="text-muted">Aún no hay publicaciones.</p>
+</ng-template>

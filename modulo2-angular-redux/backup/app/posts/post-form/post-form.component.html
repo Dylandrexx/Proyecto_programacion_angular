@@ -1,0 +1,18 @@
+<form [formGroup]="fg" (ngSubmit)="submit()" class="card card-body mb-3">
+  <div class="mb-2">
+    <label class="form-label">Título</label>
+    <input formControlName="title" type="text" class="form-control" />
+    <div class="text-danger small" *ngIf="has('title','required')">Requerido</div>
+    <div class="text-danger small" *ngIf="has('title','minlength')">Mínimo 3 caracteres</div>
+    <div class="text-danger small" *ngIf="has('title','invalidParam')">No puede contener “xyz”</div>
+  </div>
+
+  <div class="mb-2">
+    <label class="form-label">Detalle</label>
+    <input formControlName="detail" type="text" class="form-control" />
+    <div class="text-danger small" *ngIf="has('detail','required')">Requerido</div>
+    <div class="text-danger small" *ngIf="has('detail','minlength')">Mínimo 10 caracteres</div>
+  </div>
+
+  <button class="btn btn-primary" type="submit" [disabled]="fg.invalid">Agregar</button>
+</form>
