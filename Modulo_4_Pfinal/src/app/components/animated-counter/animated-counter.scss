@@ -1,0 +1,22 @@
+.counter-container {
+  display: inline-block;
+  text-align: center;
+  padding: 15px;
+  margin: 10px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 12px;
+  min-width: 80px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.counter-value {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.counter-label {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}

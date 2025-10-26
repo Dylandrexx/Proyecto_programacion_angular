@@ -1,0 +1,57 @@
+<div class="app-container">
+  <h1>Módulo 4 - Proyecto Final</h1>
+  
+  <!-- Panel de Tracking -->
+  <div class="tracking-panel">
+    <h2>📊 Panel de Tracking (Requerimiento 7)</h2>
+    
+    <div class="counters-grid">
+      <app-animated-counter 
+        [count]="(trackingData$ | async)?.totalClicks || 0" 
+        label="Total Clicks">
+      </app-animated-counter>
+      
+      <div *ngFor="let tag of getTrackingTags(trackingData$ | async)" class="tag-counter">
+        <app-animated-counter 
+          [count]="getClickCount(trackingData$ | async, tag)" 
+          [label]="tag">
+        </app-animated-counter>
+      </div>
+    </div>
+
+    <!-- Último click -->
+    <div *ngIf="(trackingData$ | async)?.lastClick" class="last-click">
+      <p><strong>Último click:</strong> {{ (trackingData$ | async)?.lastClick?.tag }} 
+      ({{ (trackingData$ | async)?.lastClick?.element }})</p>
+    </div>
+  </div>
+
+  <!-- Mapa Interactivo -->
+  <div class="map-section">
+    <h2>🗺️ Mapa Interactivo (Requerimiento 2)</h2>
+    
+    <!-- Elementos con tracking (Requerimiento 6) -->
+    <div class="tracking-buttons">
+      <button appClickTracker trackingTag="boton-principal" class="track-btn">
+        Botón Principal
+      </button>
+      
+      <button appClickTracker trackingTag="boton-secundario" class="track-btn">
+        Botón Secundario  
+      </button>
+      
+      <button appClickTracker trackingTag="boton-info" class="track-btn">
+        Botón Info
+      </button>
+    </div>
+
+    <!-- Placeholder del mapa -->
+    <div class="map-placeholder">
+      <p>🎯 Marker en: {{ markerPosition }}</p>
+      <button (click)="onMarkerClick()" class="marker-btn" appClickTracker trackingTag="marker-map">
+        ¡Haz click en este Marker!
+      </button>
+      <p><small>*Mapbox configurado con API Key</small></p>
+    </div>
+  </div>
+</div>
