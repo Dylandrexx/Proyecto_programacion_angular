@@ -1,0 +1,152 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>🛠 Panel de Administración</h2>
+        <div class="text-muted">
+          <small>{{ appConfig.appName }} v{{ appConfig.version }}</small>
+        </div>
+      </div>
+
+      <!-- Demostración useClass y useExisting -->
+      <div class="row mb-4">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">
+              <h6>🔧 Configuración useExisting</h6>
+            </div>
+            <div class="card-body">
+              <p class="mb-2"><strong>Data Service:</strong> {{ dataFromService }}</p>
+              <small class="text-muted">(ApiDataService ← DataService)</small>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">
+              <h6>⚙️ Configuración InjectionToken</h6>
+            </div>
+            <div class="card-body">
+              <p class="mb-1"><strong>API URL:</strong> {{ appConfig.apiUrl }}</p>
+              <p class="mb-0"><strong>Max Posts:</strong> {{ appConfig.maxPostsPerPage }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Formulario para crear posts -->
+      <div class="card mb-4">
+        <div class="card-header bg-success text-white">
+          <h5 class="mb-0">📝 Crear Nuevo Post</h5>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="title" class="form-label">Título</label>
+                <input
+                  type="text"
+                  id="title"
+                  formControlName="title"
+                  class="form-control"
+                  placeholder="Ingresa el título"
+                  [class.is-invalid]="postForm.get('title')?.invalid && postForm.get('title')?.touched"
+                >
+                <div *ngIf="postForm.get('title')?.errors?.['required'] && postForm.get('title')?.touched" 
+                     class="invalid-feedback">
+                  El título es requerido
+                </div>
+                <div *ngIf="postForm.get('title')?.errors?.['minlength'] && postForm.get('title')?.touched" 
+                     class="invalid-feedback">
+                  Mínimo 3 caracteres
+                </div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="content" class="form-label">Contenido</label>
+                <textarea
+                  id="content"
+                  formControlName="content"
+                  class="form-control"
+                  rows="1"
+                  placeholder="Ingresa el contenido"
+                  [class.is-invalid]="postForm.get('content')?.invalid && postForm.get('content')?.touched"
+                ></textarea>
+                <div *ngIf="postForm.get('content')?.errors?.['required'] && postForm.get('content')?.touched" 
+                     class="invalid-feedback">
+                  El contenido es requerido
+                </div>
+                <div *ngIf="postForm.get('content')?.errors?.['minlength'] && postForm.get('content')?.touched" 
+                     class="invalid-feedback">
+                  Mínimo 10 caracteres
+                </div>
+              </div>
+            </div>
+
+            <button 
+              type="submit" 
+              class="btn btn-success"
+              [disabled]="postForm.invalid"
+            >
+              ➕ Crear Post
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Posts desde NgRx Store -->
+      <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0">📊 Posts desde NgRx Store</h5>
+        </div>
+        <div class="card-body">
+          <div *ngIf="posts$ | async as posts; else loadingPosts">
+            <div *ngIf="posts.length === 0" class="text-center text-muted py-3">
+              No hay posts aún
+            </div>
+            <div *ngFor="let post of posts" class="card mb-2">
+              <div class="card-body">
+                <h6 class="card-title">{{ post.title }}</h6>
+                <p class="card-text">{{ post.content }}</p>
+                <small class="text-muted">
+                  Por: {{ post.author }} | {{ post.createdAt | date:'medium' }}
+                </small>
+              </div>
+            </div>
+          </div>
+          <ng-template #loadingPosts>
+            <div class="text-center py-3">
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Cargando...</span>
+              </div>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+
+      <!-- Posts desde Dexie -->
+      <div class="card">
+        <div class="card-header bg-warning text-dark">
+          <h5 class="mb-0">💾 Posts desde Dexie (IndexedDB)</h5>
+        </div>
+        <div class="card-body">
+          <button class="btn btn-warning btn-sm mb-3" (click)="loadDexiePosts()">
+            🔄 Actualizar
+          </button>
+          <div *ngIf="dexiePosts.length === 0" class="text-center text-muted py-3">
+            No hay posts en la base local
+          </div>
+          <div *ngFor="let post of dexiePosts" class="card mb-2">
+            <div class="card-body">
+              <h6 class="card-title">{{ post.title }}</h6>
+              <p class="card-text">{{ post.content }}</p>
+              <small class="text-muted">
+                ID: {{ post.id }} | {{ post.createdAt | date:'medium' }}
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

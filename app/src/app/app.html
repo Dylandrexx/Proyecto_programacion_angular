@@ -1,0 +1,20 @@
+<nav class="navbar navbar-dark bg-dark mb-4">
+  <div class="container">
+    <span class="navbar-brand mb-0 h1">Proyecto Angular + Bootstrap — ¡Cambios aplicados!</span>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="row g-4">
+    <div class="col-12 col-lg-5">
+      <app-hero-card
+        [title]="'Bienvenido'"
+        [subtitle]="'SPA básica con Bootstrap y TS'"
+        (action)="onHeroAction()">
+      </app-hero-card>
+    </div>
+    <div class="col-12 col-lg-7">
+      <app-items-list></app-items-list>
+    </div>
+  </div>
+</div>
